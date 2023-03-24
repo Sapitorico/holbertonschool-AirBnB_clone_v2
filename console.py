@@ -114,17 +114,34 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
+        """ Create an object of any class, with all the corresponding parameters"""
+        tokenize_arguments = args.split() # we tokenize the arguments by spaces
+        if tokenize_arguments:
+            class_name = tokenize_arguments[0]
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
+        else:
+            attributes = {}
+            for attr in tokenize_arguments[1:]:
+                key, value = attr.split('=')
+                if value.startswith('"') and value.endswith('"'):
+                    value = value[1:-1].replace('_', ' ').replace('\\"', '"')
+                elif '.' in value:
+                    value = float(value)
+                else:
+                    try:
+                        value = int(value)
+                    except ValueError:
+                        continue
+                attributes[key] = value
+        new_instance = HBNBCommand.classes[class_name]()
+        new_instance.__dict__.update(attributes) # I update the dictionary with the new attributes
+        storage.save # serialization
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """

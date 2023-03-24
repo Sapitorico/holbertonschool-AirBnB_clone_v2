@@ -126,8 +126,8 @@ class HBNBCommand(cmd.Cmd):
             return
         else:
             attributes = {}
-            for attr in tokenize_arguments[1:]:
-                key, value = attr.split('=')
+            for parameter in tokenize_arguments[1:]:
+                key, value = parameter.split('=')
                 if value.startswith('"') and value.endswith('"'):
                     value = value[1:-1].replace('_', ' ').replace('\\"', '"')
                 elif '.' in value:
@@ -140,9 +140,8 @@ class HBNBCommand(cmd.Cmd):
                 attributes[key] = value
         new_instance = HBNBCommand.classes[class_name]()
         new_instance.__dict__.update(attributes) # I update the dictionary with the new attributes
-        storage.save # serialization
+        storage.save() # serialization
         print(new_instance.id)
-        storage.save # serialization
 
     def help_create(self):
         """ Help information for the create method """

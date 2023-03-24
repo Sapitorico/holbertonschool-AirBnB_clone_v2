@@ -140,6 +140,7 @@ class HBNBCommand(cmd.Cmd):
                 attributes[key] = value
         new_instance = HBNBCommand.classes[class_name]()
         new_instance.__dict__.update(attributes) # I update the dictionary with the new attributes
+        storage.new(new_instance)
         storage.save() # serialization
         print(new_instance.id)
 
@@ -223,7 +224,7 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all(HBNBCommand.classes[args]).items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:

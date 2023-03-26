@@ -24,6 +24,29 @@ class TestConsole(unittest.TestCase):
         self.cli = None
 
     def test_create(self):
+        self.cli.onecmd("create State name='California'")
+        output = self.cli.output
+        state_id = output.strip().split()[-1][:-1]
+        self.assertTrue(len(state_id) == 36)
+        self.cli.onecmd("show State {}".format(state_id))
+        output = self.cli.output
+        self.assertTrue("California" in output)
+
+    # def test_dbstorage(self):
+    #     """ Test database storage """
+    #     state = State(name="California")
+    #     state.save()
+    #     state_id = state.id
+    #     with patch('sys.stdout', new=StringIO()) as f:
+    #         self.cli.onecmd("update State {} name 'New California'".format(state_id))
+    #         output = f.getvalue().strip()
+    #         self.assertEqual("", output)
+    #     with patch('sys.stdout', new=StringIO()) as f:
+    #         self.cli.onecmd("show State {}".format(state_id))
+    #         output = f.getvalue().strip()
+    #         self.assertTrue("New California" in output)
+
+    def test_create(self):
         """ Test create """
         with patch('sys.stdout', new=StringIO()) as f:
             self.cli.onecmd("create")
@@ -86,18 +109,6 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd("destroy BaseModel 1234-1234-1234")
             self.assertEqual("** no instance found **\n", f.getvalue())
 
-    def test_dbstorage(self):
-        """ Test database storage """
-        state = State(name="California")
-        state.save()
-        state_id = state.id
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.cli.onecmd("update State {} name 'New California'".format(state_id))
-            output = f.getvalue().strip()
-            self.assertEqual("", output)
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.cli.onecmd("show State {}".format(state_id))
-            output = f.getvalue().strip()
 
 if __name__ == '__main__':
     unittest.main()

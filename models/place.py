@@ -22,11 +22,11 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     amenity_ids = []
 
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
-        review = relationship("Review", cascade="all, delete", backref="place")
+    if getenv('HBNB_ENV') == 'db':
+        reviews = relationship("Review", cascade="all, delete, delete-orphan", backref="place")
     else:
         @property
-        def review(self):
+        def reviews(self):
             from models import storage
             review_list = []
             for rev in storage.all(Review).values():

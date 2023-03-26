@@ -15,11 +15,8 @@ from models.state import State
 from models.review import Review
 
 
-
-
 if getenv("HBNB_TYPE_STORAGE") == "db":
     storage = DBStorage()
 else:
     storage = FileStorage()
-    # storage = FileStorage()
 storage.reload()

@@ -1,6 +1,8 @@
 #!/usr/bin/python3
+""" script that starts a Flask web application """
 from flask import Flask
 
+""" application of Flask variable"""
 app = Flask(__name__)
 
 
@@ -10,4 +12,5 @@ def index():
 
 
 if __name__ == '__main__':
+    """ starts a Flask web application """
     app.run(debug=True, host='0.0.0.0', port=5000)

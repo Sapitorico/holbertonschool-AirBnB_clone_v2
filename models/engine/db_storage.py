@@ -8,6 +8,7 @@ from models.base_model import Base
 class DBStorage:
     __engine = None
     __session = None
+
     def __init__(self):
         """Create the engine and initialize the database."""
         user = getenv("HBNB_MYSQL_USER")
@@ -62,5 +63,7 @@ class DBStorage:
     def reload(self):
         """Create all tables in the database and initialize a new session."""
         Base.metadata.create_all(self.__engine)
-        Session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
+        Session = scoped_session(
+            sessionmaker(bind=self.__engine,
+                         expire_on_commit=False))
         self.__session = Session()

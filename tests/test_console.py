@@ -32,20 +32,6 @@ class TestConsole(unittest.TestCase):
         output = self.cli.output
         self.assertTrue("California" in output)
 
-    # def test_dbstorage(self):
-    #     """ Test database storage """
-    #     state = State(name="California")
-    #     state.save()
-    #     state_id = state.id
-    #     with patch('sys.stdout', new=StringIO()) as f:
-    #         self.cli.onecmd("update State {} name 'New California'".format(state_id))
-    #         output = f.getvalue().strip()
-    #         self.assertEqual("", output)
-    #     with patch('sys.stdout', new=StringIO()) as f:
-    #         self.cli.onecmd("show State {}".format(state_id))
-    #         output = f.getvalue().strip()
-    #         self.assertTrue("New California" in output)
-
     def test_create(self):
         """ Test create """
         with patch('sys.stdout', new=StringIO()) as f:
@@ -62,7 +48,10 @@ class TestConsole(unittest.TestCase):
             self.assertTrue(output.startswith(""))
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.cli.onecmd("create Place city_id='0001' user_id='0001' name='House' number_rooms=3 number_bathrooms=2 max_guest=6 price_by_night=150")
+            self.cli.onecmd(
+                "create Place city_id='0001' user_id='0001'\
+                    name='House' number_rooms=3 number_bathrooms=2\
+                        max_guest=6 price_by_night=150")
             output = f.getvalue().strip()
             self.assertTrue(output.startswith(""))
 

@@ -13,12 +13,12 @@ def index1():
 
 
 @app.route('/hbnb', strict_slashes=False)
-def index():
+def index2():
     return "HBNB"
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def index(text):
+def index3(text):
     """text variable to be displayed on the route"""
     return f"C {text}"
 

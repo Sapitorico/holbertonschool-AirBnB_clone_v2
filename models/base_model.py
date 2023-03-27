@@ -1,4 +1,4 @@
-#git !/usr/bin/python3
+#!/usr/bin/python3
 """This module defines a base class for all models in our hbnb clone"""
 import uuid
 from datetime import datetime
@@ -6,6 +6,7 @@ from sqlalchemy import Column, DateTime, String
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
+
 
 class BaseModel:
     """A base class for all hbnb models"""
@@ -57,7 +58,7 @@ class BaseModel:
         dictionary['__class__'] = self.__class__.__name__
         for key, value in dictionary.items():
             if isinstance(value, datetime):
-                    dictionary[key] = value.isoformat()
+                dictionary[key] = value.isoformat()
         if '_sa_instance_state' in dictionary:
             dictionary.pop("_sa_instance_state", None)
         return dictionary

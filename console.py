@@ -19,15 +19,15 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
 
     classes = {
-               'BaseModel': BaseModel, 'User': User, 'Place': Place,
-               'State': State, 'City': City, 'Amenity': Amenity,
-               'Review': Review
-              }
+            'BaseModel': BaseModel, 'User': User, 'Place': Place,
+            'State': State, 'City': City, 'Amenity': Amenity,
+            'Review': Review
+            }
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
-             'number_rooms': int, 'number_bathrooms': int,
-             'max_guest': int, 'price_by_night': int,
-             'latitude': float, 'longitude': float
+            'number_rooms': int, 'number_bathrooms': int,
+            'max_guest': int, 'price_by_night': int,
+            'latitude': float, 'longitude': float
             }
 
     def preloop(self):
@@ -114,8 +114,10 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class, with all the corresponding parameters"""
-        tokenize_arguments = args.split() # we tokenize the arguments by spaces
+        """ Create an object of any class,
+        with all the corresponding parameters"""
+        # we tokenize the arguments by spaces
+        tokenize_arguments = args.split()
         if tokenize_arguments:
             class_name = tokenize_arguments[0]
         if not args:
@@ -139,9 +141,11 @@ class HBNBCommand(cmd.Cmd):
                         continue
                 attributes[key] = value
         new_instance = HBNBCommand.classes[class_name]()
-        new_instance.__dict__.update(attributes) # I update the dictionary with the new attributes
+        # I update the dictionary with the new attributes
+        new_instance.__dict__.update(attributes)
         storage.new(new_instance)
-        storage.save() # serialization
+        # serialization
+        storage.save()
         print(new_instance.id)
 
     def help_create(self):
@@ -201,11 +205,9 @@ class HBNBCommand(cmd.Cmd):
         if not c_id:
             print("** instance id missing **")
             return
-
         key = c_name + "." + c_id
-
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -284,7 +286,8 @@ class HBNBCommand(cmd.Cmd):
     #     # first determine if kwargs or args
     #     if '{' in args[2] and '}' in args[2] and type(eval(args[2])) is dict:
     #         kwargs = eval(args[2])
-    #         args = []  # reformat kwargs into list, ex: [<name>, <value>, ...]
+    #         args = []  # reformat kwargs into
+    # list, ex: [<name>, <value>, ...]
     #         for k, v in kwargs.items():
     #             args.append(k)
     #             args.append(v)
@@ -336,6 +339,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

@@ -19,6 +19,7 @@ def index():
 
 @app.route('/c/<text>', strict_slashes=False)
 def index(text):
+    """text variable to be displayed on the route"""
     return f"C {text}"
 
 

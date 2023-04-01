@@ -31,7 +31,7 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     amenity_ids = []
 
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
+    if getenv('HBNB_ENV') == 'db':
         reviews = relationship(
             "Review", cascade="all, delete, delete-orphan", backref="place")
         amenities = relationship(
@@ -53,7 +53,7 @@ class Place(BaseModel, Base):
             list_of_amenities = []
             all_amenities = storage.all(Amenity)
             for key, obj in all_amenities.items():
-                if key in self.amenity_ids:
+                if key.id in self.amenity_ids:
                     list_of_amenities.append(obj)
             return list_of_amenities
 

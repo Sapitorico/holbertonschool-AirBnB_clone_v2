@@ -89,3 +89,7 @@ class FileStorage:
                 del self.__objects[key]
         else:
             pass
+
+    def close(self):
+        """deserializing the JSON file"""
+        self.reload()

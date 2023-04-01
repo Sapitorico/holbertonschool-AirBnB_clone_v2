@@ -28,7 +28,7 @@ def index3(text):
     """
     text variable to be displayed on the route
     """
-    return f"C {text.replace('_', ' ')}"
+    return "C {}".format(text.replace('_', ' '))
 
 
 if __name__ == "__main__":

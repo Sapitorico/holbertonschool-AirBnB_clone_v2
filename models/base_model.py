@@ -32,12 +32,12 @@ class BaseModel:
                     value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
                 if key != '__class__':
                     setattr(self, key, value)
-            # if 'id' not in kwargs:
-            #     self.id = str(uuid.uuid4())
-            # if 'created_at' not in kwargs:
-            #     self.created_at = datetime.utcnow()
-            # if 'updated_at' not in kwargs:
-            #     self.updated_at = datetime.utcnow()
+            if 'id' not in kwargs:
+                self.id = str(uuid.uuid4())
+            if 'created_at' not in kwargs:
+                self.created_at = datetime.utcnow()
+            if 'updated_at' not in kwargs:
+                self.updated_at = datetime.utcnow()
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -53,14 +53,12 @@ class BaseModel:
 
     def to_dict(self):
         """Returns a dictionary with all the keys and values of the instance"""
-        from models import storage
         dictionary = self.__dict__.copy()
         dictionary['__class__'] = self.__class__.__name__
         for key, value in dictionary.items():
             if isinstance(value, datetime):
                 dictionary[key] = value.isoformat()
-        if '_sa_instance_state' in dictionary:
-            dictionary.pop("_sa_instance_state", None)
+        del dictionary['_sa_instance_state']
         return dictionary
 
     def delete(self):

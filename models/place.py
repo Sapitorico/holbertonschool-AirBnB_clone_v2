@@ -35,7 +35,7 @@ class Place(BaseModel, Base):
         reviews = relationship(
             "Review", cascade="all, delete, delete-orphan", backref="place")
         amenities = relationship(
-            'Amenity', secondary=place_amenity,
+            'Amenity', secondary='place_amenity',
             backref='places', viewonly=False)
     else:
         @property

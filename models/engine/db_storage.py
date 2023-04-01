@@ -24,16 +24,6 @@ class DBStorage:
 
     def all(self, cls=None):
         """Queries all objects depending on the class name"""
-        from models.base_model import BaseModel
-        from models.amenity import Amenity
-        from models.city import City
-        from models.place import Place
-        from models.review import Review
-        from models.state import State
-        from models.user import User
-
-    def all(self, cls=None):
-        """Queries all objects depending on the class name"""
         from models.user import User
         from models.state import State
         from models.city import City

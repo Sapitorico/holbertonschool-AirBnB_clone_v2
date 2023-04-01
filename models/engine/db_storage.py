@@ -16,7 +16,7 @@ class DBStorage:
         host = getenv("HBNB_MYSQL_HOST", "localhost")
         database = getenv("HBNB_MYSQL_DB")
         self.__engine = create_engine(
-            f"mysql+mysqldb://{user}:{password}@{host}/{database}",
+            "mysql+mysqldb://{}:{}@{}/{}".format(user, password, host, database),
             pool_pre_ping=True
             )
         if getenv("HBNB_ENV") == "test":
@@ -32,20 +32,26 @@ class DBStorage:
         from models.state import State
         from models.user import User
 
-        objects = {}
-        if cls is None:
-            obj = self.__session.query(State).all()
-            obj.extend(self.__session.query(User).all())
-            obj.extend(self.__session.query(Review).all())
-            obj.extend(self.__session.query(Place).all())
-            obj.extend(self.__session.query(City).all())
-            obj.extend(self.__session.query(Amenity).all())
+    def all(self, cls=None):
+        """Queries all objects depending on the class name"""
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
+        object_dict = {}
+        if cls:
+            object_dict = self.__session.query(cls).all()
         else:
-            objs = self.__session.query(cls).all()
-            for obj in objs:
-                key = f"{obj.__class__.__name__}.{obj.id}"
-                objects[key] = obj
-        return objects
+            object_dict = self.__session.query(User).all()
+            object_dict.extend(self.__session.query(State).all())
+            object_dict.extend(self.__session.query(City).all())
+            object_dict.extend(self.__session.query(Amenity).all())
+            object_dict.extend(self.__session.query(Place).all())
+            object_dict.extend(self.__session.query(Review).all())
+        result_dict = {"{}.{}".format(obj.__class__.__name__, obj.id): obj for obj in object_dict}
+        return result_dict
 
     def new(self, obj):
         """Add a new object to the database session."""

@@ -53,14 +53,13 @@ class Place(BaseModel, Base):
             list_of_amenities = []
             all_amenities = storage.all(Amenity)
             for key, obj in all_amenities.items():
-                if key.id in self.amenity_ids:
+                if key in self.amenity_ids:
                     list_of_amenities.append(obj)
             return list_of_amenities
 
         @amenities.setter
         def amenities(self, obj=None):
-            if type(obj).__name__ == 'Amenity':
-                new_amenity = 'Amenity' + '.' + obj.id
-                self.amenity_ids.append(new_amenity)
+            if isinstance(obj, Amenity):
+                self.amenity_ids.append(obj.id)
             else:
                 pass

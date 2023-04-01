@@ -53,7 +53,7 @@ class Place(BaseModel, Base):
             list_of_amenities = []
             all_amenities = storage.all(Amenity)
             for key, obj in all_amenities.items():
-                if key in self.amentiy_ids:
+                if key in self.amenity_ids:
                     list_of_amenities.append(obj)
             return list_of_amenities
 

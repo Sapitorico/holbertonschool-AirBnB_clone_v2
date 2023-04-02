@@ -1,32 +1,28 @@
 #!/usr/bin/python3
 """ Task 8 module """
-
-from os import getenv
 from flask import Flask, render_template
+
 
 app = Flask(__name__)
 
 
 @app.route('/cities_by_states', strict_slashes=False)
-def state_city_print():
-    """prints state and city"""
+def cities_by_states():
+    """Displays states and their cities"""
 
-    from models import storage
     from models.state import State
+    from models import storage
 
-    states_dict = storage.all(State).values()
-    states_city_dict = {}
+    states_dict = storage.all(State)
 
-    for state in states_dict:
-        states_city_dict[state] = state.cities
+    states_list = sorted(states_dict.values(), key=operator.attrgetter('name'))
 
-    return render_template('8-cities_by_states.html',
-                           states_city_dict=states_city_dict)
+    return render_template('8-cities_by_states.html', states_list=states_list)
 
 
 @app.teardown_appcontext
-def closing(dummy):
-    """closes alchemy session"""
+def close_session(exception):
+    """Closes SQLAlchemy session"""
 
     from models import storage
 

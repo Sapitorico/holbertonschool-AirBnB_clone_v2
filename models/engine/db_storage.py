@@ -16,7 +16,10 @@ class DBStorage:
         host = getenv("HBNB_MYSQL_HOST", "localhost")
         database = getenv("HBNB_MYSQL_DB")
         self.__engine = create_engine(
-            "mysql+mysqldb://{}:{}@{}/{}".format(user, password, host, database),
+            "mysql+mysqldb://{}:{}@{}/{}".format(user,
+                                                 password,
+                                                 host,
+                                                 database),
             pool_pre_ping=True
             )
         if getenv("HBNB_ENV") == "test":
@@ -40,7 +43,8 @@ class DBStorage:
             object_dict.extend(self.__session.query(Amenity).all())
             object_dict.extend(self.__session.query(Place).all())
             object_dict.extend(self.__session.query(Review).all())
-        result_dict = {"{}.{}".format(obj.__class__.__name__, obj.id): obj for obj in object_dict}
+        result_dict = {"{}.{}".format(obj.__class__.__name__,
+                                      obj.id): obj for obj in object_dict}
         return result_dict
 
     def new(self, obj):

@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ Task 8 module """
 from flask import Flask, render_template
+from models import storage
+from models.state import State
 
 app = Flask(__name__)
 
@@ -9,25 +11,24 @@ app = Flask(__name__)
 def cities_by_states():
     """Displays states and their cities"""
 
-    from models.state import State
-    from models import storage
+    states_dict = storage.all(State)
 
-    import operator
-    states_dict = storage.all(State).values()
+    states_city_dict = {}
+    for state in states_dict.values():
+        states_city_dict[state] = sorted(state.cities, key=lambda c: c.name)
 
-    states_list = sorted(states_dict, key=operator.attrgetter('name'))
+    states_list = sorted(states_dict.values(), key=lambda s: s.name)
 
-    return render_template('8-cities_by_states.html', states_list=states_list)
+    return render_template('8-cities_by_states.html',
+                           states_list=states_list,
+                           states_city_dict=states_city_dict)
 
 
 @app.teardown_appcontext
 def close_session(exception):
     """Closes SQLAlchemy session"""
-
-    from models import storage
-
     storage.close()
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)

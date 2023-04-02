@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ Task 8 module """
 from flask import Flask, render_template
-import operator
 
 app = Flask(__name__)
 
@@ -13,6 +12,7 @@ def cities_by_states():
     from models.state import State
     from models import storage
 
+    import operator
     states_dict = storage.all(State)
 
     states_list = sorted(states_dict.values(), key=operator.attrgetter('name'))

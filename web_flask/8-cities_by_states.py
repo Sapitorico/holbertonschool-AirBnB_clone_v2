@@ -1,37 +1,29 @@
 #!/usr/bin/python3
-""" Task 8 module """
-
-from os import getenv
+"""
+fasdsad
+"""
 from flask import Flask, render_template
-
+from models import storage
+from models.state import State
 app = Flask(__name__)
-
-
-@app.route('/cities_by_states', strict_slashes=False)
-def state_city_print():
-    """odcast"""
-
-    from models import storage
-    from models.state import State
-
-    states_dict = storage.all(State).values()
-    states_city_dict = {}
-
-    for state in states_dict:
-        states_city_dict[state] = state.cities
-
-    return render_template('8-cities_by_states.html',
-                           states_city_dict=states_city_dict)
+storage.all()
 
 
 @app.teardown_appcontext
-def closing(dummy):
-    """penet"""
-
-    from models import storage
-
+def teardown_data(self):
+    """
+        asdsada
+    """
     storage.close()
 
 
-if __name__ == '__main__':
+@app.route('/cities_by_states', strict_slashes=False)
+def cities_by_states():
+    """ resadasdsad"""
+    states = storage.all(State)
+
+    return render_template('8-cities_by_states.html', states=states)
+
+
+if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)

@@ -15,7 +15,7 @@ def cities_by_states():
     import operator
     states_dict = storage.all(State)
 
-    states_list = sorted(states_dict.values(), key=operator.attrgetter('name'))
+    sorted_list = sorted(states_dict.values(), key=lambda state: state_dict.name)
 
     return render_template('8-cities_by_states.html', states_list=states_list)
 

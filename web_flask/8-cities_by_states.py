@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Task 8 module """
 from flask import Flask, render_template
-
+import operator
 
 app = Flask(__name__)
 

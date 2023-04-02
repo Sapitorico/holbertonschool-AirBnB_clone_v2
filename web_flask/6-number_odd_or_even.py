@@ -30,6 +30,7 @@ def index3(text):
     """
     return "C {}".format(text.replace('_', ' '))
 
+
 @app.route('/python', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def index4(text="is cool"):
@@ -52,7 +53,9 @@ def number_odd_or_even(n):
         result = "even"
     else:
         result = "odd"
-    return render_template('6-number_odd_or_even.html', number=n, result=result)
+    return render_template('6-number_odd_or_even.html',
+                           number=n, result=result)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
